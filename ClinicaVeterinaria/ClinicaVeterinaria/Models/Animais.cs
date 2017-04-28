@@ -1,30 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ClinicaVeterinaria.Models{
-    public class Animais{
+namespace ClinicaVeterinaria.Models {
+   public class Animais {
 
-        public int ID { get; set; }
 
-        public string Nome { get; set; }
+      public Animais() {
+         // inicialização da lista de Consultas de um Animal
+         Consultas = new HashSet<Consultas>();
+      }
 
-        public string Raca { get; set; }
+      [Key]
+      public int AnimalID { get; set; }
 
-        public string Especie { get; set; }
+      [Required]
+      [StringLength(30)]
+      public string Nome { get; set; }
 
-        public double Peso { get; set; }
+      [Required]
+      [StringLength(30)]
+      public string Especie { get; set; }
 
-        public int Idade { get; set; }
+      [Required]
+      [StringLength(30)]
+      public string Raca { get; set; }
 
-        //***************************************************************
-        //definir as Chaves Forasteiras, associadas a esta classe
-        //***************************************************************
-        [ForeignKey("DonoFK")]
-        public Donos Dono { get; set; } //relaciona, no c#, o objeto ANIMAL com o objeto Dono
-        public int DonoFK { get; set; } //relaciona, no SqlServer, o ANIMAL com o seu Dono(FK)
+      public float Peso { get; set; }
 
-    }
+      public float? Altura { get; set; }
+
+
+      // **************************
+      // criar a chave forasteira
+      // relaciona o objeto ANIMAL com um objeto DONO
+      public Donos Dono { get; set; }
+
+      // cria um atributo para funcionar como FK, na BD
+      // e relaciona-o com o atributo anterior
+      [ForeignKey("Dono")]
+      public int DonosFK { get; set; }
+      // **************************
+
+      // um ANIMAL tem uma coleção de CONSULTAS
+      public virtual ICollection<Consultas> Consultas { get; set; }
+
+
+   }
 }

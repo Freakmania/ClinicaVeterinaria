@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ClinicaVeterinaria.Models{
-    public class Donos{
+namespace ClinicaVeterinaria.Models {
+   public class Donos {
 
-        //definir um construtor,para carregar o atributo ListaDeAnimais
-        public Donos(){
-            ListaDeAnimais = new HashSet<Animais>();
-        }
+      // vai representar os dados da tabela dos DONOS
 
-        public int DonosID { get; set; }
-
-        public string Nome { get; set; }
-
-        public string NIF { get; set; }
-
-        //*************************************************************
-        //indicar o relacionamento entre Donos e Animais
-        //um Dono tem muitos Animais
-        //*************************************************************
-        public virtual ICollection<Animais> ListaDeAnimais { get; set; }
+      // criar o construtor desta classe
+      // e carregar a lista de Animais
+      public Donos() {
+         ListaDeAnimais = new HashSet<Animais>();
+      }
 
 
-    }
+      [Key]
+      public int DonoID { get; set; }
+
+      [Required]
+      public string Nome { set; get; }
+
+      [Required]
+      public string NIF { get; set; }
+
+      // especificar que um DONO tem muitos ANIMAIS
+      public ICollection<Animais> ListaDeAnimais { get; set; }
+
+
+
+
+   }
 }
